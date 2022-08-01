@@ -11,3 +11,12 @@ class Side_Channel_Game:
     """
     def __init__(self):
         self.init_time = time.time
+        self.cracked_state = ""
+
+    def __str__(self):
+        """
+        This method is equivalent to the method called "Pintar Estado" in
+        all the enviroments defined in class, the idea is to print the current
+        state of the game
+        """
+        print(self.cracked_state)
