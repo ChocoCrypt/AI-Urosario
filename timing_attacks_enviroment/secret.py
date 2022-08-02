@@ -19,8 +19,7 @@ def super_secret_password(user_input):
     """Secret password comparisson against the given string."""
     # The lenght of this password is long to compare different algorithms of
     # the attack
-    #secret = "ThisIsSupossedToBeASuperSecretPassworThatNooneIsGoingToGuess"
-    secret = "Hola"
+    secret = "ThisIsSupossedToBeASuperSecretPassworThatNooneIsGoingToGuess"
     if(simple_comp(user_input, secret)):
         return True
     else:
