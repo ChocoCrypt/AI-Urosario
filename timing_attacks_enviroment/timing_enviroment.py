@@ -1,6 +1,6 @@
 import time
-from simple_comp import simple_comp
-from simple_comp import super_secret_password
+from secret import simple_comp
+from secret import super_secret_password
 
 
 class Side_Channel_Game:
@@ -20,3 +20,18 @@ class Side_Channel_Game:
         state of the game
         """
         print(self.cracked_state)
+
+    def acciones_aplicables(self):
+        """
+        Applicable actions are the words in the alphabet that may me used to
+        crack a password.
+        """
+        alphabet = [chr(i) for i in range(ord("a") , ord("z")+1 )]
+        alphabet += [chr(i) for i in range(ord("A") , ord("Z")+1 )]
+        alphabet += "0 1 2 3 4 5 6 7 8 9 0".split(" ")
+        print(alphabet)
+        print(len(alphabet))
+
+
+test = Side_Channel_Game()
+test.acciones_aplicables()
