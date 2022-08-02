@@ -61,7 +61,7 @@ class Side_Channel_Game:
         means = []
         for char in tqdm(self.alphabet):
             time_per_char = []
-            for i in range(10000):
+            for i in range(1000000):
                 init = time.time()
                 super_secret_password(char)
                 fin = time.time()
@@ -101,4 +101,6 @@ class Side_Channel_Game:
 test = Side_Channel_Game()
 # test.acciones_aplicables()
 # test.crack_lenght()
+test.check_letter()
+test.cracked_initial_state="fuck"
 test.check_letter()
