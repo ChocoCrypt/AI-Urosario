@@ -13,7 +13,7 @@ class Side_Channel_Game:
     """
     def __init__(self):
         self.init_time = time.time
-        self.cracked_initial_state = ""
+        self.cracked_initial_state = "jijiji"
         self.alphabet = [chr(i) for i in range(ord("a") , ord("z")+1 )]
         self.alphabet += [chr(i) for i in range(ord("A") , ord("Z")+1 )]
         self.alphabet += "0 1 2 3 4 5 6 7 8 9 0".split(" ")
@@ -47,35 +47,6 @@ class Side_Channel_Game:
         print(f"the lenght of the key is {lenght}")
         return(lenght)
 
-    def check_letter(self):
-        """
-        This method check if the last letter is okay, if it returns true it
-        means that the letter is okay, but if it does not return true, it means
-        that one letter before the letter that we already put is not okay.
-
-        The way to know if a letter is okay is to check the nextone, if all the
-        means of the next letter are similars it means we commit an error in a
-        previous state.
-        """
-        print(f"checking if {self.cracked_initial_state} is ok or not")
-        means = []
-        for char in tqdm(self.alphabet):
-            time_per_char = []
-            for i in range(1000000):
-                init = time.time()
-                super_secret_password(char)
-                fin = time.time()
-                time_per_char.append(fin - init)
-            means.append(np.mean(time_per_char))
-        # Empirically i noticed that when the key is ok the variance goes to
-        # 2.2 and when is bad the variances go below 0.1, then i'll  say that
-        # they key is not okay when the variance goes below 0.5
-        var = np.var(means)
-        print(var)
-                
-
-
-
 
     def __str__(self):
         """
@@ -101,6 +72,4 @@ class Side_Channel_Game:
 test = Side_Channel_Game()
 # test.acciones_aplicables()
 # test.crack_lenght()
-test.check_letter()
-test.cracked_initial_state="fuck"
 test.check_letter()
