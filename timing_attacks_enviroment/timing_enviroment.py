@@ -61,13 +61,17 @@ class Side_Channel_Game:
         means = []
         for char in tqdm(self.alphabet):
             time_per_char = []
-            for i in range(1000000):
+            for i in range(10000):
                 init = time.time()
                 super_secret_password(char)
                 fin = time.time()
                 time_per_char.append(fin - init)
             means.append(np.mean(time_per_char))
-        print(np.var(means))
+        # Empirically i noticed that when the key is ok the variance goes to
+        # 2.2 and when is bad the variances go below 0.1, then i'll  say that
+        # they key is not okay when the variance goes below 0.5
+        var = np.var(means)
+        print(var)
                 
 
 
