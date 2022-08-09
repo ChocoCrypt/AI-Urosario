@@ -13,13 +13,11 @@ class Nodo:
         self.codigo = codigo
 
 def nodo_hijo(problema, madre, accion):
-
     # Función para crear un nuevo nodo
     # Input: problema, que es un objeto de clase ocho_reinas
     #        madre, que es un nodo,
     #        accion, que es una acción que da lugar al estado del nuevo nodo
     # Output: nodo
-
     estado = problema.transicion(madre.estado, accion)
     costo_camino = madre.costo_camino + problema.costo(madre.estado, accion)
     codigo = problema.codigo(estado)
@@ -57,11 +55,9 @@ def expand(problema, nodo):
     return nodos
 
 class ListaPrioritaria():
-
     def __init__(self):
         self.diccionario = {}
         self.len = 0
-
     def __str__(self):
         cadena = '['
         inicial = True
@@ -96,9 +92,7 @@ class ListaPrioritaria():
         return len(self.diccionario) == 0
 
 def backtracking_search(problema, estado):
-
     '''Función de búsqueda recursiva de backtracking'''
-
     if problema.test_objetivo(estado):
             return estado
     acciones = problema.acciones_aplicables(estado)
@@ -110,7 +104,6 @@ def backtracking_search(problema, estado):
     return None
 
 def breadth_first_search(problema):
-
     '''Función de búsqueda breadth-first'''
 
     nodo = Nodo(problema.estado_inicial, None, None, 0, problema.codigo(problema.estado_inicial))
