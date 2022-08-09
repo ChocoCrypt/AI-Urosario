@@ -13,7 +13,7 @@ class Side_Channel_Game:
     """
     def __init__(self):
         self.init_time = time.time
-        self.cracked_initial_state = "jijiji"
+        self.cracked_initial_state = ""
         # Define alphabet 
         self.alphabet = [chr(i) for i in range(ord("A") , ord("Z")+1 )] + [" "]
 
@@ -44,6 +44,12 @@ class Side_Channel_Game:
         lenght = np.argmax(means_vector)
         print(f"the lenght of the key is {lenght}")
         return(lenght)
+
+    def test_objetivo(self):
+        if(super_secret_password(self.cracked_initial_state)):
+            print("Its Done")
+            return True
+        return False
 
 
     def __str__(self):
