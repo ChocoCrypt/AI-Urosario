@@ -14,11 +14,9 @@ class Side_Channel_Game:
     def __init__(self):
         self.init_time = time.time
         self.cracked_initial_state = "jijiji"
-        self.alphabet = [chr(i) for i in range(ord("a") , ord("z")+1 )]
-        self.alphabet += [chr(i) for i in range(ord("A") , ord("Z")+1 )]
-        self.alphabet += "0 1 2 3 4 5 6 7 8 9 0".split(" ")
-        self.alphabet += """! " # $ % & / ( ) = ? ¿ ¡ * ´ ' [ ] { } _ - . , :
-            ;""".split(" ")
+        # Define alphabet 
+        self.alphabet = [chr(i) for i in range(ord("A") , ord("Z")+1 )] + [" "]
+
 
     def crack_lenght(self):
         """
@@ -49,27 +47,12 @@ class Side_Channel_Game:
 
 
     def __str__(self):
-        """
-        This method is equivalent to the method called "Pintar Estado" in
-        all the enviroments defined in class, the idea is to print the current
-        state of the game
-        """
+        """This method is equivalent to the method called pintar_estado"""
         print(self.cracked_state)
 
 
-    def acciones_aplicables(self , position):
-        """
-        Applicable actions are the words in the alphabet that may me used to
-        crack a password, this can be dependent on the rules that a password may have.
-        """
-        try:
-            self.cracked_initial_state += self.alphabet[i]
-        except:
-            print("this position is not a valid interger corresponding to the alphabet")
 
 
 
 test = Side_Channel_Game()
-# test.acciones_aplicables()
-# test.crack_lenght()
-test.check_letter()
+test.crack_lenght()
