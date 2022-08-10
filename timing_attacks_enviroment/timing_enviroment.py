@@ -16,7 +16,7 @@ class Side_Channel_Game:
         self.cracked_initial_state = ""
         # Define alphabet 
         self.alphabet = [chr(i) for i in range(ord("A") , ord("Z")+1 )] + [" "]
-
+        self.costo = 0
 
     def crack_lenght(self):
         """
@@ -46,6 +46,7 @@ class Side_Channel_Game:
         return(lenght)
 
     def test_objetivo(self):
+        """Function for testing if the password is already correct"""
         if(super_secret_password(self.cracked_initial_state)):
             print("Its Done")
             return True
