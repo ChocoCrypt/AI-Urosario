@@ -35,10 +35,12 @@ class SideChannel_Game:
         posible encontrar un algoritmo mejor para esto.
         2- Esta pendiente evaluar este metodo para medir su exactitud mediante
         un test de montecarlo.
+        3- No se está dispuesto a aceptar una eficacia menor a 98%
         """
         # Los strings ciclicos se usan mucho en el hacking para descifrar
         # longitudes de llaves o espacios de memoria.
-        opciones = [str(cyclic(i))[2:-1].upper() for i in range(100) ]
+        # Se supone que la llave mas larga posible tiene 50 caracteres
+        opciones = [str(cyclic(i))[2:-1].upper() for i in range(50)] 
         medias_tiempos = []
         for i in tqdm(opciones):
             tiempos = []
