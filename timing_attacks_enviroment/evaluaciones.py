@@ -1,4 +1,5 @@
 from timing_enviroment import * 
+from time import sleep
 import json
 
 
@@ -17,7 +18,7 @@ def evaluacion_test_longitud(sample_size , n_size):
     bien = 0
     for i in range(sample_size):
         longitud = test.crackear_longitud(n_tries=n_size)
-        if(longitud == 28):
+        if(longitud == 24):
             bien += 1
     # Calculo de el accuracy por el método de montecarlo
     acc = bien/sample_size
@@ -31,7 +32,6 @@ def evaluacion_test_longitud(sample_size , n_size):
                 }
         json.dump(obj_eval , fp)
     return(acc)
-
 
 # Evaluación para el accuracy con distintos tamaños del arreglo
 if __name__ == "__main__":

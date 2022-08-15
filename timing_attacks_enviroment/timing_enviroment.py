@@ -7,6 +7,7 @@ from secret import super_secret_password
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from pprint import pprint # Libreria para imprimir diccionarios bonitos
 
 
 class SideChannel_Game:
@@ -18,15 +19,6 @@ class SideChannel_Game:
         """Metodo Inicializador, la contraseña inicial es vacía"""
         self.plot = plot
         self.estado_inicial = ""
-
-    def checkear_estado(self, estado):
-        """
-        Metodo para evaluar si un string (un estado) se no se ha equivocado en
-        operaciones anteriores. Esto se puede saber puesto que en promedio
-        todas las operaciones se demoran lo mismo. Si hay una diferencia
-        significante entre alguna de las operaciones y el resto, esto significa
-        que el estado se encuentra en un estado aceptable.
-        """
 
     def crackear_longitud(self , n_tries = 100000):
         """
@@ -73,6 +65,8 @@ class SideChannel_Game:
         """
         Devuelve una lista de acciones que representan las posibles letras
         que podemos añadir o quitar.
+        - ¿Deberia poner en las acciones aplicables la opción de eliminar una
+          letra al estado?
         """
         # Falta poner la restricción de la longitud de la lista
         indices  = [i for i in range(len(range(ord("A") , ord("Z") +1)))]
@@ -80,7 +74,7 @@ class SideChannel_Game:
     
     def transicion(self,estado,indice):
         """Devuelve una contraseña aplicando una letra """
-        posibles_acciones = [estado + str(i) for i in range(ord("A") , ord("Z")+1)]
+        posibles_acciones = [estado + chr(i) for i in range(ord("A") , ord("Z")+1)]
         return(posibles_acciones[indice])
 
     def test_objetivo(self , estado):
@@ -93,5 +87,35 @@ class SideChannel_Game:
     def costo(self,estado,accion):
         return 1
 
+    def checkear_estado(self, estado):
+        """
+        Metodo para evaluar si un string (un estado) se no se ha equivocado en
+        operaciones anteriores. Esto se puede saber puesto que en promedio
+        todas las operaciones se demoran lo mismo. Si hay una diferencia
+        significante entre alguna de las operaciones y el resto, esto significa
+        que el estado se encuentra en un estado aceptable.
+        """
+        acciones_aplicables = self.acciones_aplicables(estado)
+        todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
+        # Evaluacion segun la diferencia de medias
+        datos_medias = []
+        for tra in todas_transiciones:
+            tiempos = []
+            for j in range(1000000): # Parece que 1000000 es un buen numero
+                tiempo_inicial = time.time()
+                super_secret_password(tra)
+                tiempo_final = time.time()
+                total = tiempo_final - tiempo_inicial
+                tiempos.append(total)
+            media = np.mean(tiempos)
+            dat = {
+                    "transicion":tra,
+                    "media":media
+                    }
+            datos_medias.append(dat)
+        pprint(datos_medias)
 
 
+
+#test = SideChannel_Game()
+#test.checkear_estado("")

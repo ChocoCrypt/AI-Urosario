@@ -17,10 +17,9 @@ def simple_comp(str1, str2):
 
 def super_secret_password(user_input):
     """Secret password comparisson against the given string."""
-    secret = "THIS IS THE CORRECT PASSWORD"
+    secret = "THISISTHECORRECTPASSWORD"
     if(simple_comp(user_input, secret)):
         return True
     else:
         return False
-
 
