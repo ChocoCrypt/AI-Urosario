@@ -13,7 +13,7 @@ from pprint import pprint # Libreria para imprimir diccionarios bonitos
 def formatear_longitud(string , lenght):
     """Metodo para formatear un string al tamaño de la llave"""
     faltante = lenght - len(string)
-    result = string + "A"*(faltante -1)
+    result = string + "A"*(faltante )
     return(result)
 
 
@@ -115,6 +115,7 @@ class SideChannel_Game:
         transiciones_formateadas = [formatear_longitud(i , tam_llave) for i in todas_transiciones]
         # Evaluacion segun la diferencia de medias
         datos_medias = []
+        medias = []
         print("Evaluando todas las posibles transiciones...")
         for tra in tqdm(transiciones_formateadas):
             tiempos = []
@@ -125,6 +126,7 @@ class SideChannel_Game:
                 total = tiempo_final - tiempo_inicial
                 tiempos.append(total)
             media = np.mean(tiempos)
+            medias.append(media)
             dat = {
                     "transicion":tra,
                     "media":media
@@ -137,12 +139,15 @@ class SideChannel_Game:
             y = [i["media"] for i in datos_medias]
             sns.scatterplot(x,y)
             plt.show()
-        print(datos_medias)
+        pprint(np.argmax(medias))
+        correct_letter = datos_medias[np.argmax(medias)]
+        print(correct_letter)
 
         
 
 
 # Test
 if __name__ == "__main__":
-    test = SideChannel_Game(plot=True)
-    test.checkear_estado("")
+    test = SideChannel_Game(plot=False)
+    for i in range(10):
+        test.checkear_estado("")
