@@ -137,8 +137,8 @@ class SideChannel_Game:
             y = [i["media"] for i in datos_medias]
             sns.scatterplot(x,y)
             plt.show()
-        print(np.argmax(todas_transiciones))
-        print(todas_transiciones[np.argmax(todas_transiciones)])
+        print(datos_medias)
+
         
 
 
