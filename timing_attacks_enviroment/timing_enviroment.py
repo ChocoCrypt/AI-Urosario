@@ -13,7 +13,7 @@ from pprint import pprint # Libreria para imprimir diccionarios bonitos
 def formatear_longitud(string , lenght):
     """Metodo para formatear un string al tamaño de la llave"""
     faltante = lenght - len(string)
-    result = string + "A"*faltante
+    result = string + "A"*(faltante -1)
     return(result)
 
 
@@ -41,6 +41,7 @@ class SideChannel_Game:
         # Se supone que la llave mas larga posible tiene 50 caracteres
         opciones = [str(cyclic(i))[2:-1].upper() for i in range(50)] 
         medias_tiempos = []
+        print("crackeando longitud...")
         for i in tqdm(opciones):
             tiempos = []
             for j in range(n_tries):
@@ -111,14 +112,13 @@ class SideChannel_Game:
         # Agarro todas las posibles acciones
         acciones_aplicables = self.acciones_aplicables(estado)
         todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
-        transiciones_formateadas = [formatear_longitud(estado , tam_llave) for i in todas_transiciones]
+        transiciones_formateadas = [formatear_longitud(i , tam_llave) for i in todas_transiciones]
         # Evaluacion segun la diferencia de medias
         datos_medias = []
-        print(transiciones_formateadas)
         print("Evaluando todas las posibles transiciones...")
         for tra in tqdm(transiciones_formateadas):
             tiempos = []
-            for j in range(100000): # Parece que 10000000 es un buen numero
+            for j in range(1000000): # Parece que 10000000 es un buen numero
                 tiempo_inicial = time.time()
                 super_secret_password(tra)
                 tiempo_final = time.time()
@@ -137,6 +137,8 @@ class SideChannel_Game:
             y = [i["media"] for i in datos_medias]
             sns.scatterplot(x,y)
             plt.show()
+        print(np.argmax(todas_transiciones))
+        print(todas_transiciones[np.argmax(todas_transiciones)])
         
 
 
