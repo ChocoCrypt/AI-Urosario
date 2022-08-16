@@ -106,7 +106,7 @@ class SideChannel_Game:
         print("Evaluando todas las posibles transiciones...")
         for tra in tqdm(todas_transiciones):
             tiempos = []
-            for j in range(1000000): # Parece que 1000000 es un buen numero
+            for j in range(100000): # Parece que 10000000 es un buen numero
                 tiempo_inicial = time.time()
                 super_secret_password(tra)
                 tiempo_final = time.time()
@@ -128,6 +128,7 @@ class SideChannel_Game:
         
 
 
-
-test = SideChannel_Game(plot=True)
-test.checkear_estado("")
+# Test
+if __name__ == "__main__":
+    test = SideChannel_Game(plot=True)
+    test.checkear_estado("")
