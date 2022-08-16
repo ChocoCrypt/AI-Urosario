@@ -94,12 +94,17 @@ class SideChannel_Game:
         todas las operaciones se demoran lo mismo. Si hay una diferencia
         significante entre alguna de las operaciones y el resto, esto significa
         que el estado se encuentra en un estado aceptable.
+        1 - Este metodo funciona pero necesito un método matemático para
+        retornar el resultado
+        2 - Con el fin de reducir el ruido, sería buena idea añadir un delay en
+        la función secret.
         """
         acciones_aplicables = self.acciones_aplicables(estado)
         todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
         # Evaluacion segun la diferencia de medias
         datos_medias = []
-        for tra in todas_transiciones:
+        print("Evaluando todas las posibles transiciones...")
+        for tra in tqdm(todas_transiciones):
             tiempos = []
             for j in range(1000000): # Parece que 1000000 es un buen numero
                 tiempo_inicial = time.time()
@@ -114,8 +119,15 @@ class SideChannel_Game:
                     }
             datos_medias.append(dat)
         pprint(datos_medias)
+        # Plot
+        if(self.plot):
+            x = [i for i in range(len(datos_medias))]
+            y = [i["media"] for i in datos_medias]
+            sns.scatterplot(x,y)
+            plt.show()
+        
 
 
 
-#test = SideChannel_Game()
-#test.checkear_estado("")
+test = SideChannel_Game(plot=True)
+test.checkear_estado("")
