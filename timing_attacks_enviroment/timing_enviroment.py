@@ -10,7 +10,14 @@ import seaborn as sns
 from pprint import pprint # Libreria para imprimir diccionarios bonitos
 
 
-class SideChannel_Game:
+def formatear_longitud(string , lenght):
+    """Metodo para formatear un string al tamaño de la llave"""
+    faltante = lenght - len(string)
+    result = string + "A"*faltante
+    return(result)
+
+
+class SideChannel_Game: 
     """
     Juego mediante el cuál se implementa un side channel attack para atacar la
     función de comparación de strings intuitiva.
@@ -98,13 +105,18 @@ class SideChannel_Game:
         retornar el resultado
         2 - Con el fin de reducir el ruido, sería buena idea añadir un delay en
         la función secret.
-        """
+        """ 
+        # Calculo el tamaño de la llave para crackearla.
+        tam_llave = self.crackear_longitud()
+        # Agarro todas las posibles acciones
         acciones_aplicables = self.acciones_aplicables(estado)
         todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
+        transiciones_formateadas = [formatear_longitud(estado , tam_llave) for i in todas_transiciones]
         # Evaluacion segun la diferencia de medias
         datos_medias = []
+        print(transiciones_formateadas)
         print("Evaluando todas las posibles transiciones...")
-        for tra in tqdm(todas_transiciones):
+        for tra in tqdm(transiciones_formateadas):
             tiempos = []
             for j in range(100000): # Parece que 10000000 es un buen numero
                 tiempo_inicial = time.time()
