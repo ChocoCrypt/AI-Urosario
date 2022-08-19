@@ -68,6 +68,7 @@ class SideChannel_Game:
         momento.
         """
         print(estado)
+        return estado
 
     def acciones_aplicables(self,estado):
         """
