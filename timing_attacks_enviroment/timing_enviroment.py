@@ -102,8 +102,8 @@ class SideChannel_Game:
         todas las operaciones se demoran lo mismo. Si hay una diferencia
         significante entre alguna de las operaciones y el resto, esto significa
         que el estado se encuentra en un estado aceptable.
-        1- Este metodo funciona en conjunto con el metodo llamado 'checkear
-        estado' , de lo contrario, no tiene sentido.
+        1- Este metodo funciona en conjunto con el metodo llamado 'test' , de
+        lo contrario, no tiene sentido.
         """ 
         # Agarro todas las posibles acciones
         acciones_aplicables = self.acciones_aplicables(estado)
