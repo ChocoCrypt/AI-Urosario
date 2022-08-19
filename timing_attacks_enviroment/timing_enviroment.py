@@ -53,8 +53,7 @@ class SideChannel_Game:
             media = np.mean(tiempos)
             medias_tiempos.append(media)
         # Ploteo la media de tiempos
-        if(self.plot):
-            y = [i for i in range(len(opciones))]
+        if(self.plot): y = [i for i in range(len(opciones))]
             x = medias_tiempos
             plt.scatter(y,x)
             plt.show()
