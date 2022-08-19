@@ -95,20 +95,16 @@ class SideChannel_Game:
     def costo(self,estado,accion):
         return 1
 
-    def checkear_estado(self, estado):
+    def test(self, estado , tam_llave):
         """
         Metodo para evaluar si un string (un estado) se no se ha equivocado en
         operaciones anteriores. Esto se puede saber puesto que en promedio
         todas las operaciones se demoran lo mismo. Si hay una diferencia
         significante entre alguna de las operaciones y el resto, esto significa
         que el estado se encuentra en un estado aceptable.
-        1 - Este metodo funciona pero necesito un método matemático para
-        retornar el resultado
-        2 - Con el fin de reducir el ruido, sería buena idea añadir un delay en
-        la función secret.
+        1- Este metodo funciona en conjunto con el metodo llamado 'checkear
+        estado' , de lo contrario, no tiene sentido.
         """ 
-        # Calculo el tamaño de la llave para crackearla.
-        tam_llave = self.crackear_longitud()
         # Agarro todas las posibles acciones
         acciones_aplicables = self.acciones_aplicables(estado)
         todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
@@ -120,7 +116,7 @@ class SideChannel_Game:
         print("calculando resultados...")
         for pal in tqdm(transiciones_formateadas):
             observaciones = []
-            for i in range(2000000):
+            for i in range(5000000): # No funciona con numeros menores a esto en mi computador :(
                 tiempo_inicial = time.time()
                 super_secret_password(pal)
                 tiempo_final = time.time()
@@ -128,21 +124,24 @@ class SideChannel_Game:
                 observaciones.append(tiempo_total)
             media = np.mean(observaciones)
             medias.append(media)
-        # Ploteo los resultados
-        if(self.plot):
-            x = [i for i in range(len(medias))]
-            y = medias
-            sns.scatterplot(x,y)
-            plt.show()
-            # Analizando las listas:
-            listas = list(zip(transiciones_formateadas , medias))
-            pprint(listas)
+        indice_correcto = np.argmax(medias)
+        accion_correcta = transiciones_formateadas[indice_correcto]
+        return(accion_correcta)
 
-
-        
-
-
-# Test
-if __name__ == "__main__":
-    test = SideChannel_Game(plot=True)
-    test.checkear_estado("THISIS")
+    def validar_estado(self , estado):
+        """
+        La letra que mas se demora es la correcta, para verificar si no se ha
+        equivocado el algoritmo antes se me ocurrió calcular la letra n
+        veces, si todas son iguales, quiere decir que es la correcta, si no,
+        la probabilidad de que se esté fallando es muy alta.
+        """
+        # Calculo el tamaño de la llave para crackearla.
+        tam_llave = self.crackear_longitud()
+        results = []
+        # Entre mayor sea n se está mas seguro de que los resultados están bien.
+        for i in range(3): 
+            result = self.test(estado , tam_llave)
+            results.append(result)
+        if(len(set(results)) == 1):
+            return(True)
+        return False
