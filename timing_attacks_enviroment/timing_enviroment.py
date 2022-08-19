@@ -112,42 +112,37 @@ class SideChannel_Game:
         # Agarro todas las posibles acciones
         acciones_aplicables = self.acciones_aplicables(estado)
         todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
+        # Formateo la longitud de los estados para que encajen con la llave
         transiciones_formateadas = [formatear_longitud(i , tam_llave) for i in todas_transiciones]
-        # Evaluacion segun la diferencia de medias
-        datos_medias = []
+        # Lista de medias de tiempos de cada string formateado
         medias = []
-        print("Evaluando todas las posibles transiciones...")
-        for tra in tqdm(transiciones_formateadas):
-            tiempos = []
-            for j in range(1000000): # Parece que 10000000 es un buen numero
+        # Las pruebas me dieron que con 5000000 se puede evaluar bien la longitud de un estado
+        print("calculando resultados...")
+        for pal in tqdm(transiciones_formateadas):
+            observaciones = []
+            for i in range(2000000):
                 tiempo_inicial = time.time()
-                super_secret_password(tra)
+                super_secret_password(pal)
                 tiempo_final = time.time()
-                total = tiempo_final - tiempo_inicial
-                tiempos.append(total)
-            media = np.mean(tiempos)
+                tiempo_total = tiempo_final - tiempo_inicial
+                observaciones.append(tiempo_total)
+            media = np.mean(observaciones)
             medias.append(media)
-            dat = {
-                    "transicion":tra,
-                    "media":media
-                    }
-            datos_medias.append(dat)
-        pprint(datos_medias)
-        # Plot
+        # Ploteo los resultados
         if(self.plot):
-            x = [i for i in range(len(datos_medias))]
-            y = [i["media"] for i in datos_medias]
+            x = [i for i in range(len(medias))]
+            y = medias
             sns.scatterplot(x,y)
             plt.show()
-        pprint(np.argmax(medias))
-        correct_letter = datos_medias[np.argmax(medias)]
-        print(correct_letter)
+            # Analizando las listas:
+            listas = list(zip(transiciones_formateadas , medias))
+            pprint(listas)
+
 
         
 
 
 # Test
 if __name__ == "__main__":
-    test = SideChannel_Game(plot=False)
-    for i in range(10):
-        test.checkear_estado("")
+    test = SideChannel_Game(plot=True)
+    test.checkear_estado("T")
