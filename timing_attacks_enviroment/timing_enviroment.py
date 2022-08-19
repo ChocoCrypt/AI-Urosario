@@ -145,4 +145,4 @@ class SideChannel_Game:
 # Test
 if __name__ == "__main__":
     test = SideChannel_Game(plot=True)
-    test.checkear_estado("T")
+    test.checkear_estado("THISIS")
