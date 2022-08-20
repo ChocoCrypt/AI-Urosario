@@ -151,6 +151,31 @@ class SideChannel_Game:
         if(len(set(results)) == 1):
             return(True)
         return False
+
+    def get_euristicas_tiempo(self, estado , tam_llave):
+        """
+        Definimos una euristica la cuál considera como la mejor opción la
+        acción que mas tiempo se demora en promedio.
+        """
+        # Agarro todas las posibles acciones
+        acciones_aplicables = self.acciones_aplicables(estado)
+        todas_transiciones = [self.transicion(estado,i) for i in acciones_aplicables]
+        # Formateo la longitud de los estados para que encajen con la llave
+        transiciones_formateadas = [formatear_longitud(i , tam_llave) for i in todas_transiciones]
+        # Lista de medias de tiempos de cada string formateado
+        medias = []
+        print("calculando resultados...")
+        for pal in tqdm(transiciones_formateadas):
+            observaciones = []
+            for i in range(5000000): # No funciona con numeros menores a esto en mi computador :(
+                tiempo_inicial = time.time()
+                super_secret_password(pal)
+                tiempo_final = time.time()
+                tiempo_total = tiempo_final - tiempo_inicial
+                observaciones.append(tiempo_total)
+            media = np.mean(observaciones)
+            medias.append(media)
+        return(medias)
     
     def codigo(self,estado):
         """Funcion codigo necesaria para implementar la clase Nodo"""
