@@ -86,6 +86,11 @@ class SideChannel_Game:
         posibles_acciones = [estado + chr(i) for i in range(ord("A") , ord("Z")+1)]
         return(posibles_acciones[indice])
 
+    def get_transiciones(self,estado):
+        """Devuelve una lista con todas las posibles transiciones de un estado"""
+        lista = [self.transicion(estado, i) for i in acciones_aplicables(estado)]
+        return(lista)
+
     def test_objetivo(self , estado):
         """
         Llama a la función secreta para saber si la contraseña es verdadera
