@@ -180,3 +180,14 @@ class SideChannel_Game:
     def codigo(self,estado):
         """Funcion codigo necesaria para implementar la clase Nodo"""
         self.estado
+
+    def quitar_ultimo_caracter(self,estado):
+        """
+        Decidimos tomar la accion de eliminar el ultimo caracter de un estado
+        como una accion independiente puesto que de ponerlo en las transiciones
+        posibles se dañaría el método de greedy search.
+        """
+        if(len(estado) > 1):
+            return(estado(:-1))
+        else:
+            return(estado)
