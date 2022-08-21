@@ -56,6 +56,8 @@ class SideChannel_Game:
         if(self.plot): 
             y = [i for i in range(len(opciones))]
             x = medias_tiempos
+            plt.xlabel("tamaño de la llave")
+            plt.ylabel("duración de la comparación")
             plt.scatter(y,x)
             plt.show()
         # El indice que mas se demoró en promedio es el tamaño del password.
@@ -175,6 +177,12 @@ class SideChannel_Game:
                 observaciones.append(tiempo_total)
             media = np.mean(observaciones)
             medias.append(media)
+        if(self.plot):
+            x = [i for i in range(medias)]
+            y = [medias]
+            plt.xlabel("posiciones de caracteres")
+            plt.ylabel("tiempos de ejecución")
+            plt.plot(x,y)
         return(medias)
     
     def codigo(self,estado):
