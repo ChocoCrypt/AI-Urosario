@@ -1,4 +1,5 @@
 from timing_enviroment import *
+from itertools import permutations
 import random
 
 
@@ -6,6 +7,22 @@ def greedy_search(problema):
     """
     Greedy search aplicado a la euristica definida como que el que mas se
     demora es mejor.
+    """
+    estado_inicial = problema.estado_inicial
+    tam_llave = problema.crackear_longitud()
+    solved = False
+    while(not solved):
+        mejor_accion = np.argmax(juego.get_euristicas_tiempo(estado_inicial , tam_llave))
+        estado_inicial = problema.transicion(estado_inicial , mejor_accion)
+        print(estado_inicial)
+        solved = problema.test_objetivo(estado_inicial)
+    print(f"Le pegó! la llave es {estado_inicial}")
+    return(estado_inicial)
+
+def limited_greedy_search(problema):
+    """
+    Limited Greedy search aplicado a la euristica definida como que el que mas
+    se demora es mejor.
     """
     estado_inicial = problema.estado_inicial
     tam_llave = problema.crackear_longitud()
@@ -44,14 +61,20 @@ def backtracking(problema):
             # buscando
             acciones.remove(transicion_aleatoria)
         solved = problema.test_objetivo(estado_inicial)
+        # Si no hay acciones pailas
+        if(len(acciones)==0):
+            print("no funcionó")
+            return("Pailas")
     return(estado_inicial)
 
-
-
-
+def bruteforcing_(problema):
+    """Este problema es equivalente a mirar todos los nodos de la raiz"""
+	mystring = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
+	from itertools import product
+	combos = [''.join(i) for i in product(mystring, repeat = 8)]
 
 
 
 juego = SideChannel_Game()
-backtracking(juego)
+bruteforcing_(juego)
 
