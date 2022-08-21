@@ -122,7 +122,7 @@ class SideChannel_Game:
         print("calculando resultados...")
         for pal in tqdm(transiciones_formateadas):
             observaciones = []
-            for i in range(iteracioens): # Funciona bien desde 5000000
+            for i in range(iteraciones): # Funciona bien desde 5000000
                 tiempo_inicial = time.time()
                 super_secret_password(pal)
                 tiempo_final = time.time()

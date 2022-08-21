@@ -79,6 +79,28 @@ def bruteforcing_(problema):
     return(False)
 
 
+def test_limited_greedy(problema,sample ,iteraciones):
+    """
+    Función de montecarlo para evaluar la efectividad del algoritmo de
+    greedy search
+    """
+    tot = 0
+    for i in range(sample):
+        if(limited_greedy_search(problema,iteraciones) == "ABC"):
+            tot += 1
+    accuracy = tot/sample
+    print(accuracy)
+    return(accuracy)
 
-problema = SideChannel_Game()
-backtracking(problema, 1000)
+def test_backtracking(problema,sample,iteraciones):
+    """
+    Implementación del método de montecarlo para evaluar la efectividad del
+    algoritmo de backtracking.
+    """
+    tot = 0
+    for i in range(sample):
+        if(backtracking(problema,iteraciones) == "ABC"):
+            tot += 1
+    accuracy = tot/sample
+    print(accuracy)
+    return(accuracy)
