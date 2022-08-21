@@ -23,4 +23,3 @@ def super_secret_password(user_input):
     if(simple_comp(user_input, secret)):
         return True
     return False
-
