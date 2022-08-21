@@ -12,7 +12,7 @@ def greedy_search(problema):
     tam_llave = problema.crackear_longitud()
     solved = False
     while(not solved):
-        mejor_accion = np.argmax(juego.get_euristicas_tiempo(estado_inicial , tam_llave))
+        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave))
         estado_inicial = problema.transicion(estado_inicial , mejor_accion)
         print(estado_inicial)
         solved = problema.test_objetivo(estado_inicial)
@@ -28,7 +28,7 @@ def limited_greedy_search(problema):
     tam_llave = problema.crackear_longitud()
     solved = False
     while(not solved):
-        mejor_accion = np.argmax(juego.get_euristicas_tiempo(estado_inicial , tam_llave))
+        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave))
         estado_inicial = problema.transicion(estado_inicial , mejor_accion)
         print(estado_inicial)
         solved = problema.test_objetivo(estado_inicial)
@@ -52,7 +52,7 @@ def backtracking(problema):
         transicion_aleatoria = random.choice(acciones)
         print(acciones)
         print(f"se elegio la opcion {transicion_aleatoria}")
-        if(juego.validar_estado(transicion_aleatoria)):
+        if(problema.validar_estado(transicion_aleatoria)):
             estado_inicial = transicion_aleatoria
             # Reseteo las acciones
             acciones = problema.get_transiciones(estado_inicial)
@@ -77,9 +77,3 @@ def bruteforcing_(problema):
             print(f"la llave es {i}")
             return(i)
     return("el tamaño de la llave está errado")
-
-
-
-juego = SideChannel_Game()
-bruteforcing_(juego)
-
