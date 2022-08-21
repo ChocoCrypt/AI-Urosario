@@ -1,4 +1,5 @@
 from timing_enviroment import *
+import random
 
 
 def greedy_search(problema):
@@ -20,14 +21,37 @@ def greedy_search(problema):
     print(f"Le pegó! la llave es {estado_inicial}")
     return(estado_inicial)
     
+
 def backtracking(problema):
     """
     Implementación del algoritmo de backtracking aplicado al problema de un
     ataque a la comparación trivial via Timming Attack.
     """
+    estado_inicial = problema.estado_inicial
+    tam_llave = problema.crackear_longitud()
+    solved = False
+    acciones = problema.get_transiciones(estado_inicial)
+    while(not solved):
+        transicion_aleatoria = random.choice(acciones)
+        print(acciones)
+        print(f"se elegio la opcion {transicion_aleatoria}")
+        if(juego.validar_estado(transicion_aleatoria)):
+            estado_inicial = transicion_aleatoria
+            # Reseteo las acciones
+            acciones = problema.get_transiciones(estado_inicial)
+        else:
+            # Si la acción que tomé está errada simplemente la elimino y sigo
+            # buscando
+            acciones.remove(transicion_aleatoria)
+        solved = problema.test_objetivo(estado_inicial)
+    return(estado_inicial)
+
+
+
+
 
 
 
 juego = SideChannel_Game()
-greedy_search(juego)
+backtracking(juego)
 
