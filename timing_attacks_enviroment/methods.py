@@ -1,5 +1,5 @@
 from timing_enviroment import *
-from itertools import permutations
+from itertools import permutations , product
 import random
 
 
@@ -69,9 +69,14 @@ def backtracking(problema):
 
 def bruteforcing_(problema):
     """Este problema es equivalente a mirar todos los nodos de la raiz"""
-	mystring = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
-	from itertools import product
-	combos = [''.join(i) for i in product(mystring, repeat = 8)]
+    tam_llave = problema.crackear_longitud()
+    mystring = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    combos = [''.join(i) for i in product(mystring, repeat = tam_llave)]
+    for i in combos:
+        if(problema.test_objetivo(i)):
+            print(f"la llave es {i}")
+            return(i)
+    return("el tamaño de la llave está errado")
 
 
 
