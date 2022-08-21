@@ -33,9 +33,3 @@ def evaluacion_test_longitud(sample_size , n_size):
         json.dump(obj_eval , fp)
     return(acc)
 
-# Evaluación para el accuracy con distintos tamaños del arreglo
-if __name__ == "__main__":
-    # Tamaños candidatos a tener un buen accuracy:
-    tamaños = [1 , 1000, 10000 , 50000, 100000, 300000, 500000, 1000000, 5000000 ]
-    for tam in tamaños:
-        evaluacion_test_longitud(1000 , tam)

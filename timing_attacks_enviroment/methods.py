@@ -3,7 +3,7 @@ from itertools import permutations , product
 import random
 
 
-def greedy_search(problema):
+def greedy_search(problema, iteraciones):
     """
     Greedy search aplicado a la euristica definida como que el que mas se
     demora es mejor.
@@ -12,14 +12,14 @@ def greedy_search(problema):
     tam_llave = problema.crackear_longitud()
     solved = False
     while(not solved):
-        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave))
+        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave, iteraciones))
         estado_inicial = problema.transicion(estado_inicial , mejor_accion)
         print(estado_inicial)
         solved = problema.test_objetivo(estado_inicial)
     print(f"Le pegó! la llave es {estado_inicial}")
     return(estado_inicial)
 
-def limited_greedy_search(problema):
+def limited_greedy_search(problema, iteraciones):
     """
     Limited Greedy search aplicado a la euristica definida como que el que mas
     se demora es mejor.
@@ -28,18 +28,18 @@ def limited_greedy_search(problema):
     tam_llave = problema.crackear_longitud()
     solved = False
     while(not solved):
-        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave))
+        mejor_accion = np.argmax(problema.get_euristicas_tiempo(estado_inicial , tam_llave, iteraciones))
         estado_inicial = problema.transicion(estado_inicial , mejor_accion)
         print(estado_inicial)
         solved = problema.test_objetivo(estado_inicial)
         if(len(estado_inicial) > tam_llave):
             print("Pailas, se equivocó")
-            return("Pailas!")
+            return(False)
     print(f"Le pegó! la llave es {estado_inicial}")
     return(estado_inicial)
     
 
-def backtracking(problema):
+def backtracking(problema, iteraciones):
     """
     Implementación del algoritmo de backtracking aplicado al problema de un
     ataque a la comparación trivial via Timming Attack.
@@ -52,7 +52,7 @@ def backtracking(problema):
         transicion_aleatoria = random.choice(acciones)
         print(acciones)
         print(f"se elegio la opcion {transicion_aleatoria}")
-        if(problema.validar_estado(transicion_aleatoria)):
+        if(problema.validar_estado(transicion_aleatoria, iteraciones)):
             estado_inicial = transicion_aleatoria
             # Reseteo las acciones
             acciones = problema.get_transiciones(estado_inicial)
@@ -64,7 +64,7 @@ def backtracking(problema):
         # Si no hay acciones pailas
         if(len(acciones)==0):
             print("no funcionó")
-            return("Pailas")
+            return(False)
     return(estado_inicial)
 
 def bruteforcing_(problema):
@@ -76,4 +76,9 @@ def bruteforcing_(problema):
         if(problema.test_objetivo(i)):
             print(f"la llave es {i}")
             return(i)
-    return("el tamaño de la llave está errado")
+    return(False)
+
+
+
+problema = SideChannel_Game()
+backtracking(problema, 1000)

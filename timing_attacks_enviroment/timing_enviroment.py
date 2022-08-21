@@ -38,8 +38,8 @@ class SideChannel_Game:
         """
         # Los strings ciclicos se usan mucho en el hacking para descifrar
         # longitudes de llaves o espacios de memoria.
-        # Se supone que la llave mas larga posible tiene 50 caracteres
-        opciones = [str(cyclic(i))[2:-1].upper() for i in range(50)] 
+        # Se supone que la llave mas larga posible tiene 10 caracteres
+        opciones = [str(cyclic(i))[2:-1].upper() for i in range(10)] 
         medias_tiempos = []
         print("crackeando longitud...")
         for i in tqdm(opciones):
@@ -101,7 +101,7 @@ class SideChannel_Game:
     def costo(self,estado,accion):
         return 1
 
-    def test(self, estado , tam_llave):
+    def test(self, estado , tam_llave, iteraciones):
         """
         Metodo para evaluar si un string (un estado) se no se ha equivocado en
         operaciones anteriores. Esto se puede saber puesto que en promedio
@@ -122,7 +122,7 @@ class SideChannel_Game:
         print("calculando resultados...")
         for pal in tqdm(transiciones_formateadas):
             observaciones = []
-            for i in range(5000000): # No funciona con numeros menores a esto en mi computador :(
+            for i in range(iteracioens): # Funciona bien desde 5000000
                 tiempo_inicial = time.time()
                 super_secret_password(pal)
                 tiempo_final = time.time()
@@ -134,7 +134,7 @@ class SideChannel_Game:
         accion_correcta = transiciones_formateadas[indice_correcto]
         return(accion_correcta)
 
-    def validar_estado(self , estado):
+    def validar_estado(self , estado, iteraciones):
         """
         La letra que mas se demora es la correcta, para verificar si no se ha
         equivocado el algoritmo antes se me ocurrió calcular la letra n
@@ -146,13 +146,13 @@ class SideChannel_Game:
         results = []
         # Entre mayor sea n se está mas seguro de que los resultados están bien.
         for i in range(3): 
-            result = self.test(estado , tam_llave)
+            result = self.test(estado , tam_llave, iteraciones)
             results.append(result)
         if(len(set(results)) == 1):
             return(True)
         return False
 
-    def get_euristicas_tiempo(self, estado , tam_llave):
+    def get_euristicas_tiempo(self, estado , tam_llave, iteraciones):
         """
         Definimos una euristica la cuál considera como la mejor opción la
         acción que mas tiempo se demora en promedio.
@@ -167,7 +167,7 @@ class SideChannel_Game:
         print("calculando resultados...")
         for pal in tqdm(transiciones_formateadas):
             observaciones = []
-            for i in range(5000000): # No funciona con numeros menores a esto en mi computador :(
+            for i in range(iteraciones): # Funciona bien desde 5000000
                 tiempo_inicial = time.time()
                 super_secret_password(pal)
                 tiempo_final = time.time()
