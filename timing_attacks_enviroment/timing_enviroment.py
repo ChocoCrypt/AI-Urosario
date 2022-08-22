@@ -178,11 +178,12 @@ class SideChannel_Game:
             media = np.mean(observaciones)
             medias.append(media)
         if(self.plot):
-            x = [i for i in range(medias)]
+            x = [i for i in range(len(medias))]
             y = [medias]
             plt.xlabel("posiciones de caracteres")
             plt.ylabel("tiempos de ejecución")
-            plt.plot(x,y)
+            plt.scatter(x,y)
+            plt.show()
         return(medias)
     
     def codigo(self,estado):
